@@ -11,7 +11,8 @@ set(SFML_LIB    sfml-graphics
                 sfml-system)
 
 set(SRC     Source/Sprite.cpp
-            Source/Moveable.cpp)
+            Source/Moveable.cpp
+            Source/Controllable.cpp)
 
 add_executable(${PROJECT_NAME} main.cpp)
 
