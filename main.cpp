@@ -36,7 +36,7 @@ int main()
     
     using namespace std::chrono_literals;
     {
-        std::this_thread::sleep_for(20ms);
+        std::this_thread::sleep_for(25ms);
     }
 
     return 0;

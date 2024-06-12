@@ -7,7 +7,7 @@
 class Moveable : public Sprite
 {
 protected:
-    float speed_ = 1.f;
+    float speed_ = 0.5f;
     sf::Vector2f velocity_ {0.f, 0.f};
     float jumpHeight_ = -20.f;
 
