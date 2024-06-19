@@ -14,14 +14,14 @@ class SpriteFixture : public testing::TestWithParam<std::tuple<bool, sf::Vector2
 {
 public:
     //default size [30, 30]
-    std::unique_ptr<Sprite> spritePtr = std::make_unique<Sprite>(1, sf::Vector2f(200, 200));
+    std::unique_ptr<Sprite> spritePtr = std::make_unique<Sprite>(sf::Vector2f(200, 200));
 };
 
 TEST_P(SpriteFixture, collisionTest)
 {   
     //GIVEN
     std::tuple<bool, sf::Vector2f> tuple = GetParam();
-    std::unique_ptr<Sprite> target = std::make_unique<Sprite>(1, std::get<1>(tuple));
+    std::unique_ptr<Sprite> target = std::make_unique<Sprite>(std::get<1>(tuple));
 
     //WHEN
     bool result = spritePtr->checkCollision(target);

@@ -11,6 +11,8 @@ set(SFML_LIB    sfml-graphics
                 sfml-system)
 
 set(SRC     Source/Sprite.cpp
+            Source/Item.cpp
+            Source/Inventory.cpp
             Source/Moveable.cpp
             Source/Controllable.cpp)
 

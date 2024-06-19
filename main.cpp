@@ -14,7 +14,7 @@ int main()
 {
     sf::RenderWindow window(sf::VideoMode(1440, 1080), "Adventure Game");
     
-    Controllable controllable(5, sf::Vector2f(500.f, 400.f), 0.2);
+    Controllable controllable(sf::Vector2f(500.f, 400.f), 5, 0.2);
 
     while(window.isOpen())
     {

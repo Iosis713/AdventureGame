@@ -1,11 +1,13 @@
 #include "Headers/Controllable.hpp"
 
-Controllable::Controllable(int HP, sf::Vector2f position, float speed)
-    : Moveable(HP, position, speed)
+Controllable::Controllable(sf::Vector2f position, int HP, float speed)
+    : Moveable(position, HP, speed)
 {};
 
 void Controllable::control()
 {
+    //reset previous velocity
+    velocity_ = {0, 0};
     //side movement
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::A))
     {
@@ -15,12 +17,7 @@ void Controllable::control()
     {
         velocity_.x = speed_;
     }
-    else
-    {
-        velocity_.x = 0.f;
-    }
-    
-    if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+    else if(sf::Keyboard::isKeyPressed(sf::Keyboard::W))
     {
         velocity_.y = -speed_;
     }
@@ -28,10 +25,5 @@ void Controllable::control()
     {
         velocity_.y = speed_;
     }
-    else
-    {
-        velocity_.y = 0.f;
-    }
-
 };
 
