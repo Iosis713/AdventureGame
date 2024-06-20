@@ -20,6 +20,9 @@ public:
     Item& operator--();
     Item& operator+=(unsigned int add);
     Item& operator-=(unsigned int remove);
+
+    std::string getName() const;
+    unsigned int getQuantity() const;
 };
 #endif
 

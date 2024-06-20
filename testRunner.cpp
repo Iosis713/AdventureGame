@@ -1,3 +1,4 @@
+#include <string>
 #include <iostream>
 #include <memory>
 #include <tuple>
@@ -6,6 +7,8 @@
 #include "Source/Headers/Sprite.hpp"
 #include "Source/Headers/Moveable.hpp"
 #include "Source/Headers/Controllable.hpp"
+#include "Source/Headers/Item.hpp"
+#include "Source/Headers/Inventory.hpp"
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
@@ -16,6 +19,32 @@ public:
     //default size [30, 30]
     std::unique_ptr<Sprite> spritePtr = std::make_unique<Sprite>(sf::Vector2f(200, 200));
 };
+
+class ItemFixture : public testing::TestWithParam<std::tuple<unsigned int, unsigned int>>
+{
+public:
+    Item item{sf::Vector2f(50.f, 50.f), 100, 10, "Name", 100};
+};
+
+class InventoryFixture : public testing::Test
+{
+public:
+    Inventory inventory;
+
+    void SetUp() override;
+};
+
+TEST_F(InventoryFixture, NameSortingTest)
+{
+    //GIVEN
+    SetUp();
+
+    //WHEN
+    inventory.sortByName();
+
+    //THEN
+    ASSERT_STREQ("Atem", inventory.getItems()[0]->getName().c_str());
+}
 
 TEST_P(SpriteFixture, collisionTest)
 {   
@@ -28,6 +57,18 @@ TEST_P(SpriteFixture, collisionTest)
 
     //THEN
     ASSERT_EQ(result, std::get<0>(tuple));
+}
+
+TEST_P(ItemFixture, AddingItemQuantity)
+{
+    //GIVEN
+    std::tuple<unsigned int, unsigned int> tuple = GetParam();
+
+    //WHEN
+    item += std::get<1>(tuple);
+
+    //THEN
+    ASSERT_EQ(std::get<0>(tuple), item.getQuantity());
 }
 
 INSTANTIATE_TEST_CASE_P(CollisionTest, SpriteFixture, testing::Values(
@@ -45,8 +86,26 @@ INSTANTIATE_TEST_CASE_P(CollisionTest, SpriteFixture, testing::Values(
     std::make_tuple(true, sf::Vector2f(200,171))//1 pixel deep edge
     ));
 
+INSTANTIATE_TEST_CASE_P(AddingItemQuantity, ItemFixture, testing::Values(
+    std::make_tuple(10, 0),
+    std::make_tuple(17, 7)));
+
+
 int main(int argc, char** argv)
 {
     testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }
+
+void InventoryFixture::SetUp()
+{
+    inventory.addItem(std::make_shared<Item>(sf::Vector2f(50, 50), 10, 2, "ItemA", 50));
+    inventory.addItem(std::make_shared<Item>(sf::Vector2f(50, 50), 30, 100, "ItemE", 50));
+    inventory.addItem(std::make_shared<Item>(sf::Vector2f(50, 50), 70, 7, "ItemB", 50));
+    inventory.addItem(std::make_shared<Item>(sf::Vector2f(50, 50), 23, 8, "Atem", 50));
+    inventory.addItem(std::make_shared<Item>(sf::Vector2f(50, 50), 190, 92, "Zet", 50));
+    inventory.addItem(std::make_shared<Item>(sf::Vector2f(50, 50), 120, 15, "Item", 50));
+    inventory.addItem(std::make_shared<Item>(sf::Vector2f(50, 50), 5, 43, "ItemC", 50));
+    inventory.addItem(std::make_shared<Item>(sf::Vector2f(50, 50), 20, 1, "ItemD", 50));
+}
+
