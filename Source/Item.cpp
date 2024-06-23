@@ -50,4 +50,5 @@ std::string Item::getName() const {return this->name_;}
 
 unsigned int Item::getQuantity() const {return this->quantity_;}
 
+unsigned int Item::getValue() const {return this->value_;}
 

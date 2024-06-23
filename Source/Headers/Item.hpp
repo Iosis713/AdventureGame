@@ -23,6 +23,7 @@ public:
 
     std::string getName() const;
     unsigned int getQuantity() const;
+    unsigned int getValue() const;
 };
 #endif
 

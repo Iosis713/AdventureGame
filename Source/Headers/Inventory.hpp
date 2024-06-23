@@ -25,6 +25,7 @@ public:
 
     void sortByName();
     void sortByQuantity();
+    void sortByValue();
 
     Items& getItems();
 };

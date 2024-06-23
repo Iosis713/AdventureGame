@@ -29,11 +29,19 @@ Items& Inventory::getItems() {return this->items_;}
 
 void Inventory::sortByQuantity()
 {
-    std::sort(items_.begin(), items_.end(), [](const auto item1, const auto item2)
+    std::sort(items_.begin(), items_.end(), [](const auto& item1, const auto& item2)
             {
                 auto quantity1 = item1->getQuantity();
                 auto quantity2 = item2->getQuantity();
                 return quantity1 < quantity2;
+            });
+}
+
+void Inventory::sortByValue()
+{
+    std::sort(items_.begin(), items_.end(), [](const auto& item1, const auto& item2)
+            {
+                return item1->getValue() < item2->getValue();
             });
 }
 

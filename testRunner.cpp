@@ -76,6 +76,19 @@ TEST_F(InventoryFixture, QuantitySortingTest)
     ASSERT_EQ(expected, afterSorting);        
 }
 
+TEST_F(InventoryFixture, ValueSortingTest)
+{
+    inventory.sortByValue();
+    std::vector<unsigned int> expected{5, 10, 20, 23, 30, 70, 120, 190};
+    std::vector<unsigned int> afterSorting;
+    for(const auto& item : inventory.getItems())
+    {
+        afterSorting.push_back(item->getValue());
+    }
+
+    ASSERT_EQ(expected, afterSorting);
+}
+
 TEST_P(SpriteFixture, collisionTest)
 {   
     //GIVEN
