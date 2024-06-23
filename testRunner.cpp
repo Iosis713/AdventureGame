@@ -1,5 +1,8 @@
+#include <algorithm>
+#include <chrono>
+#include <memory>
 #include <string>
-#include <iostream>
+#include <vector>
 #include <memory>
 #include <tuple>
 #include <gtest/gtest.h>
@@ -37,13 +40,40 @@ public:
 TEST_F(InventoryFixture, NameSortingTest)
 {
     //GIVEN
-    SetUp();
+    //SetUp();
 
     //WHEN
+    auto startTime = std::chrono::system_clock::now();
     inventory.sortByName();
+    auto endTime = std::chrono::system_clock::now();
+    auto resultTime = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+    std::vector<std::string> expected{"Atem", "Item", "ItemA", "ItemB", "ItemC", "ItemD", "ItemE", "Zet"};
+    std::vector<std::string> afterSorting;
+    for(const auto& item : inventory.getItems())
+    {
+        afterSorting.push_back(item->getName());
+    }
 
     //THEN
-    ASSERT_STREQ("Atem", inventory.getItems()[0]->getName().c_str());
+    std::cout << "Name sorting time: " << resultTime.count() << "ns\n"; 
+    ASSERT_EQ(expected, afterSorting);
+}
+
+TEST_F(InventoryFixture, QuantitySortingTest)
+{   
+    auto startTime = std::chrono::system_clock::now();
+    inventory.sortByQuantity();
+    auto endTime = std::chrono::system_clock::now();
+    auto resultTime = std::chrono::duration_cast<std::chrono::nanoseconds>(endTime - startTime);
+    std::vector<unsigned int> expected{1, 2, 7, 8, 15, 43, 92, 100};
+    std::vector<unsigned int> afterSorting;
+    for(const auto& item : inventory.getItems())
+    {
+        afterSorting.push_back(item->getQuantity());
+    }
+
+    std::cout << "Quantity sorting time: " << resultTime.count() << "ns\n";
+    ASSERT_EQ(expected, afterSorting);        
 }
 
 TEST_P(SpriteFixture, collisionTest)
@@ -98,7 +128,7 @@ int main(int argc, char** argv)
 }
 
 void InventoryFixture::SetUp()
-{
+{   
     inventory.addItem(std::make_shared<Item>(sf::Vector2f(50, 50), 10, 2, "ItemA", 50));
     inventory.addItem(std::make_shared<Item>(sf::Vector2f(50, 50), 30, 100, "ItemE", 50));
     inventory.addItem(std::make_shared<Item>(sf::Vector2f(50, 50), 70, 7, "ItemB", 50));
