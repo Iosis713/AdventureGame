@@ -24,6 +24,7 @@ public:
     void addItem(const std::shared_ptr<Item> ptr);
 
     void sortByName();
+    void sortByQuantity();
 
     Items& getItems();
 };

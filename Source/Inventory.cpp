@@ -17,28 +17,23 @@ void Inventory::addItem(const std::shared_ptr<Item> ptr)
 
 void Inventory::sortByName()
 {
-    std::sort(items_.begin(), items_.end(), [](auto item1, auto item2)
+    std::sort(items_.begin(), items_.end(), [](const auto& item1, const auto& item2)
             {
-            auto name1 = item1->getName();
-            auto name2 = item2->getName();
-            return name1 < name2;
-            /*OLD
-                //alfabetically
-                auto iter1 = name1.begin(); //first letter
-                auto iter2 = name2.begin();
-                do
-                {
-                    if(*iter1 < *iter2)
-                    {
-                        return true;
-                    }
-                    iter1++;
-                    iter2++;
-                }while(*iter1 == *iter2);
-                //return name1 < name2;
-            */
+                auto name1 = item1->getName();
+                auto name2 = item2->getName();
+                return name1 < name2;
             });
 }
 
 Items& Inventory::getItems() {return this->items_;}
+
+void Inventory::sortByQuantity()
+{
+    std::sort(items_.begin(), items_.end(), [](const auto item1, const auto item2)
+            {
+                auto quantity1 = item1->getQuantity();
+                auto quantity2 = item2->getQuantity();
+                return quantity1 < quantity2;
+            });
+}
 
