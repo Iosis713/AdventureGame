@@ -2,6 +2,7 @@
 #ifndef INVENTORY
 #define INVENTORY
 
+//#include <stdexcept>
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -20,13 +21,12 @@ public:
     Inventory();
     ~Inventory() = default;
 
-    void addItem(const Item& item);
     void addItem(const std::shared_ptr<Item> ptr);
-
+    void removeItem(const std::string& itemName);
     void sortByName();
     void sortByQuantity();
     void sortByValue();
-
+    
     Items& getItems();
 };
 #endif
